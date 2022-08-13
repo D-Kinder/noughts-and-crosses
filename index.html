@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noughts & Crosses</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="index.js"></script>
+</head>
+<body>
+    <h1>Noughts & Crosses</h1>
+    <h2>Welcome to the game of Noughts & Crosses!</h2>
+    <h3>Take it in turns to place a marker on one of the available sections on the grid.</h3>
+    <h3>If a player gets 3 markers in a row, they win!</h3>
+    <div id="board">
+        <div data-index="1" class="tile bottom-border right-border"></div>
+        <div data-index="2" class="tile bottom-border right-border"></div>
+        <div data-index="3" class="tile bottom-border"></div>
+        <div data-index="4" class="tile bottom-border right-border"></div>
+        <div data-index="5" class="tile bottom-border right-border"></div>
+        <div data-index="6" class="tile bottom-border"></div>
+        <div data-index="7" class="tile right-border"></div>
+        <div data-index="8" class="tile right-border"></div>
+        <div data-index="9" class="tile"></div>
+        <div id="line" class="line"></div>
+    </div>
+    <div id="game-over-area" class="hidden">
+        <h2 id="game-over-message" class="game-over-message">Player won the game!</h2>
+        <button id="play-again">Play again</button>
+    </div>
+    <div id="score-count" class="score-count visible">
+        <h2 id="player-x-count" class="player-score-count">Player X total wins: 0</h2>
+        <h2 id="player-o-count" class="player-score-count">Player O total wins: 0</h2>
+        <h2 id="draws">Draws: 0</h2>
+        <br>
+        <button id="reset-scores">Reset Scores</button>
+    </div>
+</body>
+</html>
