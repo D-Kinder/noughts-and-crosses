@@ -15,9 +15,11 @@ const playerOCount = document.getElementById("player-o-count")
 const draws = document.getElementById("draws")
 const resetScores = document.getElementById("reset-scores")
 
+//create an array equal to how many tiles we have and fill with null. These will be changed as tiles are clicked.
 const board = Array(tiles.length)
 board.fill(null)
 
+//each winning combination paired up with the relevant line that will appear on screen
 const winningCombinations = [
     { combination: [1, 2, 3], line: "line-row-1" },
     { combination: [4, 5, 6], line: "line-row-2" },
@@ -28,7 +30,7 @@ const winningCombinations = [
     { combination: [1, 5, 9], line: "line-diagonal-1" },
     { combination: [3, 5, 7], line: "line-diagonal-2" }
 ]
-
+//simple function to increment number of wins for each player and alter the text that will show on screen
 const updateTotalWins = (winningPlayer) => {
     if(winningPlayer === "X"){
         playerXWins++
@@ -42,7 +44,8 @@ const updateTotalWins = (winningPlayer) => {
         draws.innerText = `Draws: ${totalDraws}`
     }
 }
-
+//simple function to change message given when the game is over
+//classList change so message becomes visible
 const gameOver = (winningPlayer) => {
     let result = "Draw!"
     if(winningPlayer !== null){
@@ -54,7 +57,9 @@ const gameOver = (winningPlayer) => {
     gameOverArea.classList = 'visible'
     gameOverMessage.innerText = result
 }
-
+// combinations act as index values to look into our board. Has to be -1 because board is indexed, so position 1 is board[0]
+// if all 3 values equal (and not null) they we have winning combination
+// adds the coloured line classList and invokes gameOver with winning player
 const checkWinningCombination = () => {
     for(const winningCombo of winningCombinations){
         const { combination, line } = winningCombo
@@ -68,7 +73,7 @@ const checkWinningCombination = () => {
             return;
         }
     }
-
+// if board is full and now winner found, invoke gameOver with null
 const completeBoard = board.every((tile) => tile !== null)
 if(completeBoard){
     gameOver(null)
@@ -76,15 +81,18 @@ if(completeBoard){
 }
 
 const clickTile = (event) => {
+    // if visible classList present, this means the game is over so do nothing
     if(gameOverArea.classList.contains("visible")) {
         return;
     }
     const selectedTile = event.target
+    // data-index given to each tile with number 1-9 so can be identified
     const selectedTileNumber = selectedTile.dataset.index
-
+    // if a tile already has text in it, it has already been selected, therefore do nothing
     if(selectedTile.innerText !== ""){
         return;
     }
+    // sets text on screen to player, reassigns value within board position to player, then changes player
     if(playerTurn === player_X){
         selectedTile.innerText = player_X
         board[selectedTileNumber-1] = player_X
@@ -96,10 +104,11 @@ const clickTile = (event) => {
         playerTurn = player_X
       
     }
+    //invokes hoverMarker so hovers work again then checks current game state against the winning combinations
     hoverMarker()
     checkWinningCombination()
 }
-
+// first remove and current hovers, assign variable with relevant player turn, then add that class to every tile
 const hoverMarker = () => {
     tiles.forEach((tile) => {
         tile.classList.remove("x-hover")
@@ -114,13 +123,13 @@ const hoverMarker = () => {
         }
     })
 }
-
+//invoke 
 hoverMarker()
 
 tiles.forEach((tile) => {
     tile.addEventListener("click", clickTile)
 })
-
+// resets game
 const startNewGame = () => {
     winningLine.className = "line"
     gameOverArea.className = "hidden"
@@ -130,11 +139,12 @@ const startNewGame = () => {
 }
 
 const resetScore = () => {
-    winningLine.className = "line"
-    gameOverArea.className = "hidden"
-    board.fill(null)
-    tiles.forEach((tile) => tile.innerText= "" )
-    hoverMarker()
+    startNewGame()
+    // winningLine.className = "line"
+    // gameOverArea.className = "hidden"
+    // board.fill(null)
+    // tiles.forEach((tile) => tile.innerText= "" )
+    // hoverMarker()
     playerOWins = 0
     playerXWins = 0
     totalDraws = 0
